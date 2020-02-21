@@ -1,2 +1,2 @@
-# basketball
+# Basketball game
 Enjoy basketball game!
