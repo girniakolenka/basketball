@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CodeGeneratorComponent } from './code-generator/code-generator.component';
@@ -16,6 +17,7 @@ import { BallComponent } from './playground/ball/ball.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     DragDropModule
   ],
   providers: [],
