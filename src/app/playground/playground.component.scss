@@ -1,0 +1,11 @@
+$amount: 5;
+$size: 100px;
+
+:host {
+  display: grid;
+  grid-template-columns: repeat($amount, $size);
+  grid-template-rows: repeat($amount, $size);
+  border: 1px solid #ccc;
+  grid-gap: 3px;
+  background-color: azure;
+}
