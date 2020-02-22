@@ -7,13 +7,17 @@ import { CodeGeneratorComponent } from './code-generator/code-generator.componen
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PlaygroundComponent } from './playground/playground.component';
 import { BallComponent } from './playground/ball/ball.component';
+import { BarrierComponent } from './playground/barrier/barrier.component';
+import { BasketComponent } from './playground/basket/basket.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CodeGeneratorComponent,
     PlaygroundComponent,
-    BallComponent
+    BallComponent,
+    BarrierComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,

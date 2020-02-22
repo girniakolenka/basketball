@@ -1,3 +1,8 @@
-<app-ball></app-ball>
+<app-ball [ngStyle]="randomStyles.ball"></app-ball>
+<app-basket [ngStyle]="randomStyles.basket"></app-basket>
+<ng-container *ngFor="let barrier of randomStyles.barriers">
+  <app-barrier [ngStyle]="barrier"></app-barrier>
+</ng-container>
+
 
 

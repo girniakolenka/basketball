@@ -1,10 +1,8 @@
 :host {
-  grid-column: 3 / span 1;
-  grid-row: 3 / span 1;
   place-self: center;
   width: 100px;
   height: 100px;
-    .ball-container {
+    .container {
       width: 100px;
       height: 100px;
       display: flex;
