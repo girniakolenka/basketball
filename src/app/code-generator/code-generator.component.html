@@ -1,6 +1,6 @@
 <div class="container">
   <div>
-    <h3>List of available commands:</h3>
+    <h4>List of available commands:</h4>
     <div
       cdkDropList
       cdkDropListSortingDisabled
@@ -14,7 +14,7 @@
   </div>
 
   <div>
-    <h3>Console:</h3>
+    <h4>Console:</h4>
     <div class="console-area">
       <div
         cdkDropList
@@ -23,7 +23,7 @@
         [cdkDropListConnectedTo]="commandsList"
         (cdkDropListDropped)="onDrop($event)"
         #consoleList="cdkDropList"
-        class="list" >
+        class="list vertical-list" >
         <div class="list-item" *ngFor="let item of consoleCommands; let i=index;" cdkDrag>
           <div>{{item.name}} <span (click)="delete(i)"> x </span></div>
         </div>

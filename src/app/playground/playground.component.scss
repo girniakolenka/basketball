@@ -2,10 +2,16 @@ $amount: 5;
 $size: 100px;
 
 :host {
-  display: grid;
-  grid-template-columns: repeat($amount, $size);
-  grid-template-rows: repeat($amount, $size);
-  border: 1px solid #ccc;
-  grid-gap: 3px;
-  background-color: #ffffff;
+  .container{
+    display: grid;
+    grid-template-columns: repeat($amount, $size);
+    grid-template-rows: repeat($amount, $size);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: url("./../../assets/background.png");
+    background-repeat: repeat;
+    background-size: 100px 100px;
+    width: 499px;
+    height: 499px;
+  }
 }
