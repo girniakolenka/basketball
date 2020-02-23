@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter, Type} from '@angular/core';
 
 @Component({
   selector: 'app-console-command',
@@ -6,8 +6,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./console-command.component.scss']
 })
 export class ConsoleCommandComponent {
-  @Input() command;
-  @Input() index;
+  @Input() command: Type<{ name: string }>;
+  @Input() index: number;
   @Output() deleted = new EventEmitter<number>();
 
   delete(): void {

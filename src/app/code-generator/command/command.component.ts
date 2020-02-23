@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, Type} from '@angular/core';
 
 @Component({
   selector: 'app-command',
@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./command.component.scss']
 })
 export class CommandComponent {
-  @Input() command;
+  @Input() command: Type<{ name: string }>;
 }
