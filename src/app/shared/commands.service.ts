@@ -4,7 +4,22 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CommandsService {
-  private commands = [];
+  private defaultCommands = [
+    {id: 'up', name: 'Up'},
+    {id: 'down', name: 'Down'},
+    {id: 'left', name: 'Left'},
+    {id: 'right', name: 'Right'},
+    {id: 'get', name: 'Get'},
+    {id: 'put', name: 'Put'}
+  ];
+
+  private commands = [
+    {id: 'put', name: 'Put'}
+  ];
+
+  getDefaultCommands() {
+    return this.defaultCommands;
+  }
 
   getCommands() {
     return this.commands;

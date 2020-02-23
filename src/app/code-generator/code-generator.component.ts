@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
-import {CommandsService} from '../shared/commands.service';
+import { CommandsService } from '../shared/commands.service';
 
 @Component({
   selector: 'app-code-generator',
@@ -8,19 +8,15 @@ import {CommandsService} from '../shared/commands.service';
   styleUrls: ['./code-generator.component.scss'],
 })
 export class CodeGeneratorComponent {
-  private commands = [
-    {id: 'up', name: 'Up'},
-    {id: 'down', name: 'Down'},
-    {id: 'left', name: 'Left'},
-    {id: 'right', name: 'Right'},
-    {id: 'get', name: 'Get'},
-    {id: 'put', name: 'Put'}
-  ];
+  public defaultCommands = [];
+  public consoleCommands = [];
 
-  constructor(private commandsService: CommandsService) { }
-  consoleCommands = [];
+  constructor(private commandsService: CommandsService) {
+    this.defaultCommands = commandsService.getDefaultCommands();
+    this.consoleCommands = commandsService.getCommands();
+  }
 
-  onDrop(event: CdkDragDrop<string[]>) {
+  onDrop(event: CdkDragDrop<string[]>): void {
     const {
       previousContainer,
       container,
@@ -38,11 +34,11 @@ export class CodeGeneratorComponent {
     }
   }
 
-  delete(index) {
+  onDelete(index: number): void {
     this.consoleCommands.splice(index, 1);
   }
 
-  start() {
+  onStart(): void {
     this.commandsService.setCommands(this.consoleCommands);
   }
 }

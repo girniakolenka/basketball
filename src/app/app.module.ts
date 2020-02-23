@@ -10,6 +10,8 @@ import { BallComponent } from './playground/ball/ball.component';
 import { BarrierComponent } from './playground/barrier/barrier.component';
 import { BasketComponent } from './playground/basket/basket.component';
 import { NotificationComponent } from './notification/notification.component';
+import { CommandComponent } from './code-generator/command/command.component';
+import { ConsoleCommandComponent } from './code-generator/console-command/console-command.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { NotificationComponent } from './notification/notification.component';
     BallComponent,
     BarrierComponent,
     BasketComponent,
-    NotificationComponent
+    NotificationComponent,
+    CommandComponent,
+    ConsoleCommandComponent
   ],
   imports: [
     BrowserModule,

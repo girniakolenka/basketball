@@ -1,0 +1,17 @@
+$color: #ffffff;
+$border: 1px solid #ccc;
+$border-radius: 4px;
+$text-align: center;
+
+:host {
+    box-sizing: border-box;
+    cursor: move;
+    border-radius: $border-radius;
+    text-align: $text-align;
+    background-color: $color;
+    padding: 5px;
+    flex-grow: 1;
+    margin: 5px;
+    border: $border;
+    max-height: 30px;
+}

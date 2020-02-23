@@ -2,21 +2,6 @@ $color: #ffffff;
 $border: 1px solid #ccc;
 $border-radius: 4px;
 $text-align: center;
-%item {
-  box-sizing: border-box;
-  cursor: move;
-  border-radius: $border-radius;
-  text-align: $text-align;
-  background-color: $color;
-};
-
-%remove-icon {
-  width: 10px;
-  height: 10px;
-  vertical-align: middle;
-  margin-left: 10px;
-  cursor: pointer;
-}
 
 :host {
   grid-column: 3/span 1;
@@ -37,15 +22,6 @@ $text-align: center;
       overflow: auto;
       background-color: $color;
 
-      .list-item {
-        @extend %item;
-        padding: 5px;
-        flex-grow: 1;
-        margin: 5px;
-        border: $border;
-        max-height: 30px;
-      }
-
       &.horizontal-list {
         display: flex;
         flex-flow: row nowrap;
@@ -55,10 +31,6 @@ $text-align: center;
         flex: 1;
         display: flex;
         flex-direction: column;
-
-        img.remove-icon {
-          @extend %remove-icon;
-        }
       }
     }
 
@@ -80,7 +52,11 @@ $text-align: center;
 }
 
 .cdk-drag-preview {
-  @extend %item;
+  box-sizing: border-box;
+  cursor: move;
+  border-radius: $border-radius;
+  text-align: $text-align;
+  background-color: $color;
   padding: 0 10px;
   display: flex;
   align-items: center;
@@ -89,8 +65,12 @@ $text-align: center;
   0 8px 10px 1px rgba(0, 0, 0, 0.14),
   0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
-  img.remove-icon {
-    @extend %remove-icon;
+  .remove-icon {
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    margin-left: 10px;
+    cursor: pointer;
   }
 }
 
