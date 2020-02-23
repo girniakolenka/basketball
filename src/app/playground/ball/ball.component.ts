@@ -14,6 +14,7 @@ export class BallComponent {
   constructor(private animationService: AnimationService ) { }
 
   start() {
+    this.stop();
     this._createPlayer();
     this.player.play();
   }
@@ -25,7 +26,6 @@ export class BallComponent {
   }
 
   _createPlayer() {
-    this.stop();
     const animationFactory = this.animationService.getAnimationFactory();
     this.player = animationFactory.create(this.ballElement.nativeElement);
   }

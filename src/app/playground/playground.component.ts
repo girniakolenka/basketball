@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RandomPositionsService } from './random-positions.service';
+import { RandomPositionsService } from './shared/random-positions.service';
 
 @Component({
   selector: 'app-playground',
@@ -25,17 +25,16 @@ export class PlaygroundComponent implements OnInit {
   }
 
   _createRandomStyles() {
-    const [
+    const {
       ballPosition,
       basketPosition,
-      firstBarrier,
-      secondBarrier
-    ] = this.randomPositionService.getPositions();
+      barriersPositions
+    } = this.randomPositionService;
 
     this.randomStyles = {
       ball: this._getStyles(ballPosition),
       basket: this._getStyles(basketPosition),
-      barriers: [this._getStyles(firstBarrier), this._getStyles(secondBarrier)]
+      barriers: barriersPositions.map((barrier) => this._getStyles(barrier))
     };
   }
 }

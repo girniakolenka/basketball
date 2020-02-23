@@ -5,8 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class RandomPositionsService {
   private amount = 5;
+  private barriersAmount = 2;
+  public ballPosition: Array<number>;
+  public basketPosition: Array<number>;
+  public barriersPositions: Array<Array<number>>;
 
-  getPositions() {
+  constructor() {
+    const randomMatrix = this._getRandomMatrix();
+
+    this.barriersPositions = randomMatrix.splice(0, this.barriersAmount);
+    [this.ballPosition, this.basketPosition] = randomMatrix;
+  }
+
+  _getRandomMatrix() {
     return this._shuffle(this._createMatrix());
   }
 
