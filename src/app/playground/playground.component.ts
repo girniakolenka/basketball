@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RandomPositionsService } from './shared/random-positions.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { RandomPositionsService } from './shared/random-positions.service';
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
+  @Input() updatePlaying: boolean;
   public randomStyles;
 
   constructor(private randomPositionService: RandomPositionsService) { }

@@ -14,7 +14,7 @@ export class CommandsService {
   ];
 
   private commands = [
-    {id: 'put', name: 'Put'}
+    {id: 'get', name: 'Get'}
   ];
 
   getDefaultCommands() {

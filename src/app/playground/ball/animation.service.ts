@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {animate, AnimationBuilder, AnimationFactory, keyframes, style} from '@angular/animations';
 import { CommandsService } from '../../shared/commands.service';
 import { RandomPositionsService } from '../shared/random-positions.service';
+import {NotificationService} from '../../shared/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,64 +13,132 @@ export class AnimationService {
     right: { x: 1, y: 0},
     up: { x: 0, y: -1},
     down: { x: 0, y: 1},
+    get: { x: 0, y: 0},
+    put: { x: 0, y: 0}
   };
-  private boundaries: Array<number>;
+  private x = 0;
+  private y = 0;
 
   constructor(
     private animationBuilder: AnimationBuilder,
     private commandsService: CommandsService,
-    private randomPositionService: RandomPositionsService
+    private randomPositionService: RandomPositionsService,
+    private notificationService: NotificationService
   ) {}
 
   getAnimationFactory(): AnimationFactory {
+    const steps = [
+      this._styleTemplate({degree: 0, offset: 0}),
+      ...this._generateKeyframes()
+    ];
+    const len = steps.length;
+
     return this.animationBuilder.build([
-        animate(
-          this._getDuration(), keyframes([
-            this._styleTemplate({x: 0, y: 0, degree: 0, offset: 0}),
-            ...this._generateKeyframes()
-        ]))
-      ]);
+      animate(this._getDuration(len), keyframes(steps))
+    ]);
   }
 
-  _getDuration(): string {
-    const commands = this.commandsService.getCommands();
-    const amount = commands.length;
-
+  _getDuration(amount): string {
     return `${amount}s`;
   }
 
   _generateKeyframes(): Array<any> {
     const commands = this.commandsService.getCommands();
     const len = commands.length;
+    const keyframesArr = [];
+
+    // TODO
+    if (commands[0].id === 'get') {
+      for (let i = 1; i < len; i++) {
+        const command = commands[i];
+        const degree = this._generateDegree(i);
+        const offset = this._generateOffset(i, len);
+        const commandXY = this.commandsMap[command.id];
+        this.x = this.x + commandXY.x;
+        this.y = this.y + commandXY.y;
+        const [originX, originY] = this._getOriginBallCoordinates();
+// TODO
+        if (this._isBarriers(originX, originY)) {
+          break;
+        }
+        if (command.id === 'put') {
+          if (this._isWinner()) {
+            this.notificationService.setNotification('win');
+          } else {
+            this.notificationService.setNotification('fail');
+          }
+          break;
+        }
+        keyframesArr.push(this._styleTemplate({degree, offset}));
+      }
+    } else {
+      this.notificationService.setNotification('startAgain');
+    }
+
+    return keyframesArr;
+}
+
+  _isBarriers(x: number, y: number): boolean {
+    const { barriersPositions } = this.randomPositionService;
+    let isBarriers = true;
+    const coordinates = [x, y];
+
+    if (this._isInRange(x, y)) {
+      isBarriers = barriersPositions.some((barrier) => this._isSameCoordinates(barrier, coordinates));
+
+      if (isBarriers) {
+        this.notificationService.setNotification('barriers');
+      }
+    } else {
+      this.notificationService.setNotification('borders');
+    }
+
+    return isBarriers;
+  }
+
+  _getOriginBallCoordinates() {
     const [offsetX, offsetY] = this.randomPositionService.ballPosition;
-    let x = 0;
-    let y = 0;
+    const originX = this.x + offsetX;
+    const originY = this.y + offsetY;
 
-    return commands.map((command, index) => {
-      const degree = this._generateDegree(index);
-      const offset = this._generateOffset(index, len);
-      const commandXY = this.commandsMap[command.id];
+    return [originX, originY];
+  }
 
-      x = x + commandXY.x;
-      y = y + commandXY.y;
+  _isWinner() {
+    const { basketPosition } = this.randomPositionService;
 
-      console.log(x + offsetX, y + offsetY);
+    return this._isSameCoordinates(basketPosition, this._getOriginBallCoordinates());
+  }
 
-      return this._styleTemplate({x, y, degree, offset});
-    });
+  _isSameCoordinates(coordinatesA: Array<number>, coordinatesB: Array<number>): boolean {
+    const [coordAX, coordAY] = coordinatesA;
+    const [coordBX, coordBY] = coordinatesB;
+
+    return coordAX === coordBX && coordAY === coordBY;
+  }
+
+  _isInRange(x: number, y: number) {
+    const {
+      start,
+      amount
+    } = this.randomPositionService;
+    const isInRangeX = x <= amount && x >= start;
+    const isInRangeY = y <= amount && y >= start;
+
+    return isInRangeX && isInRangeY;
   }
 
   _generateDegree(index: number): number {
-    return index % 2 === 0 ? 360 : 0;
+    return index % 2 === 0 ? 0 : 360;
   }
 
   _generateOffset(index: number, len: number): number {
-    return (index + 1) / len;
+    return index / (len - 1);
   }
 
-  _styleTemplate({x, y, degree, offset}) {
-    const translateX = x === 0 ? 0 : `${x}00%`;
-    const translateY = y === 0 ? 0 : `${y}00%`;
+  _styleTemplate({degree, offset}) {
+    const translateX = this.x === 0 ? 0 : `${this.x}00%`;
+    const translateY = this.y === 0 ? 0 : `${this.y}00%`;
 
     return  style({ transform: `translateX(${translateX}) translateY(${translateY}) rotate(${degree}deg)`, offset });
   }

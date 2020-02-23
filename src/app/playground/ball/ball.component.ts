@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import {Component, ViewChild, ElementRef, OnChanges, SimpleChanges, Input} from '@angular/core';
 import { AnimationPlayer } from '@angular/animations';
 import { AnimationService } from './animation.service';
 
@@ -7,19 +7,26 @@ import { AnimationService } from './animation.service';
   templateUrl: './ball.component.html',
   styleUrls: ['./ball.component.scss']
 })
-export class BallComponent {
+export class BallComponent implements OnChanges {
+  @Input() updatePlaying: boolean;
   @ViewChild('ballElement') ballElement: ElementRef;
   private player: AnimationPlayer;
 
   constructor(private animationService: AnimationService ) { }
 
-  start() {
-    this.stop();
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.updatePlaying.firstChange) {
+      this._start();
+    }
+  }
+
+  _start() {
+    this._stop();
     this._createPlayer();
     this.player.play();
   }
 
-  stop() {
+  _stop() {
     if (this.player) {
       this.player.destroy();
     }

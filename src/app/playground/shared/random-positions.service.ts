@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RandomPositionsService {
-  private amount = 5;
   private barriersAmount = 2;
+  public start = 1;
+  public amount = 5;
   public ballPosition: Array<number>;
   public basketPosition: Array<number>;
   public barriersPositions: Array<Array<number>>;
@@ -22,11 +23,11 @@ export class RandomPositionsService {
   }
 
   _createMatrix() {
-    const { amount } = this;
+    const { start, amount } = this;
     const matrix = [];
 
-    for (let i = 0; i < amount; i++) {
-      for (let j = 0; j < amount; j++) {
+    for (let i = start; i <= amount; i++) {
+      for (let j = start; j <= amount; j++) {
         matrix.push([i, j]);
       }
     }

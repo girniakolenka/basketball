@@ -31,4 +31,4 @@
     </div>
   </div>
 </div>
-<button (click)="onStart()">Start</button>
+<button [disabled]="consoleCommands.length === 0" (click)="onStart()">Play</button>
