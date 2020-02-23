@@ -2,6 +2,10 @@ $amount: 5;
 $size: 100px;
 
 :host {
+  grid-column: 1/span 2;
+  grid-row: 3/5;
+  display: flex;
+
   .container{
     display: grid;
     grid-template-columns: repeat($amount, $size);

@@ -1,17 +1,20 @@
 :host {
- // font-size: 14px;
   color: #333;
   box-sizing: border-box;
 
   .content {
-    display: flex;
-    flex-direction: column;
-    width: 700px;
-    margin: auto;
-    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 250px 270px 450px;
+    grid-template-rows: 40px 50px repeat(2, 250px);
+    width: 970px;
     padding: 20px;
+    margin: auto;
+  }
+  .main-title{
+    font-size: 18px;
   }
 }
 

@@ -1,6 +1,6 @@
 <div class="container">
-  <div>
-    <h4>List of available commands:</h4>
+
+  <span class="title">List of available commands:</span>
     <div
       cdkDropList
       cdkDropListSortingDisabled
@@ -11,11 +11,10 @@
       id="command-area">
       <div class="list-item" *ngFor="let command of commands" cdkDrag>{{command.name}}</div>
     </div>
-  </div>
 
-  <div>
-    <h4>Console:</h4>
-    <div class="console-area">
+
+  <span class="title">Console:</span>
+  <div class="console-area">
       <div
         cdkDropList
         cdkDragBoundary=".console-area"
@@ -25,10 +24,12 @@
         #consoleList="cdkDropList"
         class="list vertical-list" >
         <div class="list-item" *ngFor="let item of consoleCommands; let i=index;" cdkDrag>
-          <div>{{item.name}} <span (click)="delete(i)"> x </span></div>
+          <div>
+            {{item.name}}
+            <img (click)="delete(i)" src="./../../assets/remove.png" alt="remove" class="remove-icon" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </div>
 <button (click)="start()">Start</button>

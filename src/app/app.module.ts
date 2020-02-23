@@ -9,6 +9,7 @@ import { PlaygroundComponent } from './playground/playground.component';
 import { BallComponent } from './playground/ball/ball.component';
 import { BarrierComponent } from './playground/barrier/barrier.component';
 import { BasketComponent } from './playground/basket/basket.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { BasketComponent } from './playground/basket/basket.component';
     PlaygroundComponent,
     BallComponent,
     BarrierComponent,
-    BasketComponent
+    BasketComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
