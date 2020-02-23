@@ -7,7 +7,6 @@ import { RandomPositionsService } from './shared/random-positions.service';
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
-  @Input() updatePlaying: boolean;
   public randomStyles;
 
   constructor(private randomPositionService: RandomPositionsService) { }

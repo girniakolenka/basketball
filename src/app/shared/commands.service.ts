@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class CommandsService {
   private commands = [
     {id: 'get', name: 'Get'}
   ];
+  private commandsAnnouncedSource = new Subject();
+  public commandsAnnounced$ = this.commandsAnnouncedSource.asObservable();
 
   getDefaultCommands() {
     return this.defaultCommands;
@@ -29,5 +32,6 @@ export class CommandsService {
     const len = this.commands.length;
 
     this.commands.splice(0, len, ...newCommands);
+    this.commandsAnnouncedSource.next();
   }
 }

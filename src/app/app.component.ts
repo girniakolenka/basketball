@@ -5,10 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  public updatePlaying: boolean;
-
-  onStart() {
-    this.updatePlaying = !this.updatePlaying;
-  }
-}
+export class AppComponent {}

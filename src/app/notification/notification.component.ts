@@ -22,6 +22,9 @@ export class NotificationComponent implements OnDestroy {
     clearTimeout(this.timeout);
   }
 
+  /*
+   * We need to add timeout here to display notification messages only after animation has finished
+   */
   _subscribeToNotification({ message, cls }) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component } from '@angular/core';
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommandsService } from '../shared/commands.service';
 
@@ -8,7 +8,6 @@ import { CommandsService } from '../shared/commands.service';
   styleUrls: ['./code-generator.component.scss'],
 })
 export class CodeGeneratorComponent {
-  @Output() started = new EventEmitter<number>();
   public defaultCommands = [];
   public consoleCommands = [];
 
@@ -41,6 +40,5 @@ export class CodeGeneratorComponent {
 
   onStart(): void {
     this.commandsService.setCommands(this.consoleCommands);
-    this.started.emit();
   }
 }

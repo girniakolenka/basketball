@@ -28,6 +28,7 @@ export class NotificationService {
     }
   };
   private notificationAnnouncedSource = new Subject<{message: string, cls: string}>();
+  private delay: number;
 
   public notificationAnnounced$ = this.notificationAnnouncedSource.asObservable();
 
@@ -38,6 +39,10 @@ export class NotificationService {
   }
 
   getDelay(): number {
-    return 1000;
+    return this.delay;
+  }
+
+  setDelay(delay: number) {
+   this.delay = delay;
   }
 }
