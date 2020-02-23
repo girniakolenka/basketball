@@ -34,6 +34,4 @@ export class RandomPositionsService {
 
     return arr;
   }
-
-
 }

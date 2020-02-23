@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-barrier',
   templateUrl: './barrier.component.html',
   styleUrls: ['./barrier.component.scss']
 })
-export class BarrierComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class BarrierComponent {}

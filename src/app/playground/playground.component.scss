@@ -14,7 +14,7 @@ $size: 100px;
     border-radius: 4px;
     background: url("./../../assets/background.png");
     background-repeat: repeat;
-    background-size: 100px 100px;
+    background-size: $size $size;
     width: 499px;
     height: 499px;
   }
