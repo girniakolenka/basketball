@@ -43,6 +43,6 @@ export class NotificationService {
   }
 
   setDelay(delay: number) {
-   this.delay = delay;
+   this.delay = delay * 1000;
   }
 }

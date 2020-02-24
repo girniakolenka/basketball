@@ -47,53 +47,85 @@ export class AnimationService {
     const len = commands.length;
     const keyframesArr = [];
 
-    // TODO
-    if (commands[0].id === 'get') {
+    this.notificationService.setDelay(len);
+
+    if (this._isFirstGetStage(commands)) {
       for (let i = 1; i < len; i++) {
         const command = commands[i];
-        const degree = this._generateDegree(i);
-        const offset = this._generateOffset(i, len);
-        const commandXY = this.commandsMap[command.id];
-        this.x = this.x + commandXY.x;
-        this.y = this.y + commandXY.y;
-        const [originX, originY] = this._getOriginBallCoordinates();
-// TODO
-        if (this._isBarriers(originX, originY)) {
+        const { id } = command;
+
+        this._setNewCoordinates(id);
+        if (this._isBarriers() && this._isOutBoundaries()) {
           break;
         }
-        if (command.id === 'put') {
-          if (this._isWinner()) {
-            this.notificationService.setNotification('win');
-          } else {
-            this.notificationService.setNotification('fail');
-          }
+        if (this._isPutStage(id)) {
+          this._setWinLoseNotification();
           break;
         }
-        keyframesArr.push(this._styleTemplate({degree, offset}));
+        keyframesArr.push(this._createNewKeyframes(i, len));
       }
     } else {
       this.notificationService.setNotification('startAgain');
     }
+    this._setWinLoseNotification();
 
     return keyframesArr;
-}
+  }
 
-  _isBarriers(x: number, y: number): boolean {
-    const { barriersPositions } = this.randomPositionService;
-    let isBarriers = true;
-    const coordinates = [x, y];
+  _isPutStage(id) {
+    return id === 'put';
+  }
 
-    if (this._isInRange(x, y)) {
-      isBarriers = barriersPositions.some((barrier) => this._isSameCoordinates(barrier, coordinates));
+  _isFirstGetStage(commands) {
+    const [firstCommand] = commands;
+    const { id } = firstCommand;
 
-      if (isBarriers) {
-        this.notificationService.setNotification('barriers');
-      }
+    return id === 'get';
+  }
+
+  _setWinLoseNotification() {
+    if (this._isWinner()) {
+      this.notificationService.setNotification('win');
     } else {
-      this.notificationService.setNotification('borders');
+      this.notificationService.setNotification('fail');
+    }
+  }
+
+  _createNewKeyframes(index, len) {
+    const degree = this._generateDegree(index);
+    const offset = this._generateOffset(index, len);
+
+    return this._styleTemplate({degree, offset});
+  }
+
+  _setNewCoordinates(id) {
+    const commandXY = this.commandsMap[id];
+    this.x = this.x + commandXY.x;
+    this.y = this.y + commandXY.y;
+  }
+
+  _isBarriers(): boolean {
+    const [x, y] = this._getOriginBallCoordinates();
+    const { barriersPositions } = this.randomPositionService;
+    const coordinates = [x, y];
+    const isBarriers = barriersPositions.some((barrier) => this._isSameCoordinates(barrier, coordinates));
+
+    if (isBarriers) {
+      this.notificationService.setNotification('barriers');
     }
 
     return isBarriers;
+  }
+
+  _isOutBoundaries(): boolean {
+    const [x, y] = this._getOriginBallCoordinates();
+    const isOutBoundaries = !this._isInRange(x, y);
+
+    if (isOutBoundaries) {
+      this.notificationService.setNotification('borders');
+    }
+
+    return isOutBoundaries;
   }
 
   _getOriginBallCoordinates() {
