@@ -55,7 +55,7 @@ export class AnimationService {
         const { id } = command;
 
         this._setNewCoordinates(id);
-        if (this._isBarriers() && this._isOutBoundaries()) {
+        if (this._isBarriers() || this._isOutBoundaries()) {
           break;
         }
         if (this._isPutStage(id)) {
