@@ -47,27 +47,25 @@ export class AnimationService {
     const len = commands.length;
     const keyframesArr = [];
 
-    this.notificationService.setDelay(len);
-
     if (this._isFirstGetStage(commands)) {
       for (let i = 1; i < len; i++) {
         const command = commands[i];
         const { id } = command;
 
         this._setNewCoordinates(id);
-        if (this._isBarriers() || this._isOutBoundaries()) {
+        if (this._isBarriers(i) || this._isOutBoundaries(i)) {
           break;
         }
         if (this._isPutStage(id)) {
-          this._setWinLoseNotification();
+          this._setWinLoseNotification(i);
           break;
         }
         keyframesArr.push(this._createNewKeyframes(i, len));
       }
     } else {
-      this.notificationService.setNotification('startAgain');
+      this.notificationService.setNotification('startAgain', 0);
     }
-    this._setWinLoseNotification();
+    this._setWinLoseNotification(keyframesArr.length);
 
     return keyframesArr;
   }
@@ -83,11 +81,11 @@ export class AnimationService {
     return id === 'get';
   }
 
-  _setWinLoseNotification() {
+  _setWinLoseNotification(amount: number) {
     if (this._isWinner()) {
-      this.notificationService.setNotification('win');
+      this.notificationService.setNotification('win', amount);
     } else {
-      this.notificationService.setNotification('fail');
+      this.notificationService.setNotification('fail', amount);
     }
   }
 
@@ -104,25 +102,25 @@ export class AnimationService {
     this.y = this.y + commandXY.y;
   }
 
-  _isBarriers(): boolean {
+  _isBarriers(amount: number): boolean {
     const [x, y] = this._getOriginBallCoordinates();
     const { barriersPositions } = this.randomPositionService;
     const coordinates = [x, y];
     const isBarriers = barriersPositions.some((barrier) => this._isSameCoordinates(barrier, coordinates));
 
     if (isBarriers) {
-      this.notificationService.setNotification('barriers');
+      this.notificationService.setNotification('barriers', amount);
     }
 
     return isBarriers;
   }
 
-  _isOutBoundaries(): boolean {
+  _isOutBoundaries(amount: number): boolean {
     const [x, y] = this._getOriginBallCoordinates();
     const isOutBoundaries = !this._isInRange(x, y);
 
     if (isOutBoundaries) {
-      this.notificationService.setNotification('borders');
+      this.notificationService.setNotification('borders', amount);
     }
 
     return isOutBoundaries;

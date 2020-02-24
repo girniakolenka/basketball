@@ -32,9 +32,10 @@ export class NotificationService {
 
   public notificationAnnounced$ = this.notificationAnnouncedSource.asObservable();
 
-  setNotification(value) {
+  setNotification(value, delay) {
     const notification = this.notifications[value];
 
+    this.setDelay(delay);
     this.notificationAnnouncedSource.next(notification);
   }
 
